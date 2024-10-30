@@ -96,6 +96,54 @@ En cas d'erreur, vérifier :
 - Le status du service : systemctl status haproxy
 - La configuration : haproxy -c -f /etc/haproxy/haproxy.cfg
 
+### 🏠 Transformation en Proxies Résidentiels
+
+Pour faire passer vos proxies en "résidentiels", vous pouvez ajouter ces configurations :
+
+#### 1. Installation de packages supplémentaires
+
+```bash
+sudo apt-get install tor privoxy -y
+sudo nano /etc/privoxy/config
+```
+
+Ajouter : 
+
+```
+forward-socks5 / 127.0.0.1:9050 .
+listen-address [2a02:c204:2:5012::*]:3128-3148
+```
+
+Configuration de Tor :
+
+```bash
+sudo nano /etc/tor/torrc
+```
+
+Ajouter : 
+
+```js
+ExitNodes {fr} # Pour forcer les sorties en France
+StrictNodes 1
+MaxCircuitDirtiness 60 # Change d'IP toutes les 60 secondes
+```
+
+Modification d'HAProxy :
+
+```
+frontend proxy_ipv6
+    bind :::3128-3148 v4v6
+    default_backend tor_privoxy
+
+backend tor_privoxy
+    mode tcp
+    server privoxy1 127.0.0.1:8118 check
+```
+- Cette configuration permet de :
+- Masquer la nature des proxies serveurs
+- Obtenir des IPs qui apparaissent comme résidentielles
+- Rotation automatique des IPs via Tor
+
 ### 📊 Caractéristiques du VLE-4 :
 
 - 4 Go de RAM (suffisant pour votre code avec maxConcurrentRequests = 1)
