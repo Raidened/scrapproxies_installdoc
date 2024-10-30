@@ -2,9 +2,9 @@
 
 ### 📋 Prérequis :
 
--VPS Ubuntu sur OVH
--Accès root
--Block IPv6 configuré sur OVH
+- VPS Ubuntu sur OVH
+- Accès root
+- Block IPv6 configuré sur OVH
 
 ### 🛠 Installation de HAProxy :
 
