@@ -9,11 +9,13 @@
 ### 🛠 Installation de HAProxy :
 
 ```bash
+
 # Mise à jour du système
 sudo apt update && sudo apt upgrade -y
 
 # Installation de HAProxy
 sudo apt install haproxy -y
+
 ```
 
 ### ⚙️ Configuration de HAProxy :
